@@ -1,0 +1,51 @@
+package de.fh.albsig.matrikel.nr.service;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import de.fh.albsig.matrikel.nr.exception.WeatherException;
+import de.fh.albsig.matrikel.nr.model.WeatherReport;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+class MockWeatherServiceTest {
+
+    private MockWeatherService service;
+
+    @BeforeAll
+    static void beforeAll() {
+    }
+
+    @BeforeEach
+    void setUp() {
+        service = new MockWeatherService();
+    }
+
+    @Test
+    void shouldReturnWeatherForValidCity() throws WeatherException {
+        WeatherReport report = service.getWeatherForCity("berlin");
+        assertEquals("Berlin", report.getCity());
+    }
+
+    @Test
+    void shouldThrowExceptionForBlankCity() {
+        assertThrows(WeatherException.class, () -> service.getWeatherForCity(" "));
+    }
+
+    @Test
+    void shouldReturnSunnyCondition() throws WeatherException {
+        WeatherReport report = service.getWeatherForCity("hamburg");
+        assertEquals("Sunny", report.getCondition());
+    }
+
+    @AfterEach
+    void tearDown() {
+    }
+
+    @AfterAll
+    static void afterAll() {
+    }
+}
