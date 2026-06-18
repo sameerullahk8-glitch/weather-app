@@ -41,6 +41,20 @@ class MockWeatherServiceTest {
         assertEquals("Sunny", report.getCondition());
     }
 
+    @Test
+    void shouldReturnDescription() throws WeatherException {
+        WeatherReport report = service.getWeatherForCity("berlin");
+        assertEquals("Sunny", report.getDescription());
+    }
+
+    @Test
+    void shouldCreateExceptionWithCause() {
+        Throwable cause = new RuntimeException("network error");
+        WeatherException exception = new WeatherException("Failed", cause);
+        assertEquals("Failed", exception.getMessage());
+        assertEquals(cause, exception.getCause());
+    }
+
     @AfterEach
     void tearDown() {
     }
