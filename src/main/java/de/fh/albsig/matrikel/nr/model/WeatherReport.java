@@ -1,5 +1,6 @@
 package de.fh.albsig.matrikel.nr.model;
 
+/** Holds weather data for a specific city. */
 public class WeatherReport {
 
   private final String city;
@@ -7,6 +8,14 @@ public class WeatherReport {
   private final String description;
   private final int humidity;
 
+  /**
+   * Creates a new WeatherReport.
+   *
+   * @param city        the city name
+   * @param temperature the temperature in Celsius
+   * @param description the weather description
+   * @param humidity    the humidity percentage
+   */
   public WeatherReport(
       final String city,
       final double temperature,

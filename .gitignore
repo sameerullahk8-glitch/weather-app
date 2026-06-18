@@ -1,0 +1,30 @@
+# Maven build output
+target/
+
+# Log files produced by the app
+*.log
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# VS Code
+.vscode/
+
+# NetBeans
+nbproject/
+nb-configuration.xml
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# macOS
+.DS_Store

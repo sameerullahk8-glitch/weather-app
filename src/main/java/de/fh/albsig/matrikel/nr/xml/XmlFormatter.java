@@ -3,11 +3,18 @@ package de.fh.albsig.matrikel.nr.xml;
 import de.fh.albsig.matrikel.nr.model.WeatherReport;
 import java.util.Objects;
 
+/** Formats a WeatherReport as an XML string. */
 public class XmlFormatter {
 
   public XmlFormatter() {
   }
 
+  /**
+   * Converts a WeatherReport to an XML string.
+   *
+   * @param report the weather report to format
+   * @return the XML representation of the report
+   */
   public String toXml(final WeatherReport report) {
     Objects.requireNonNull(report, "report must not be null");
 
