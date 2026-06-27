@@ -1,8 +1,9 @@
 ```mermaid
 flowchart TD
-    A[User Opens App] --> B[Enter City Name]
-    B --> C[API Request Sent]
-    C --> D[Weather API Response]
-    D --> E[Display Weather Data]
-    E --> F[Show UI to User]
+    A[User] --> B[Weather App UI]
+    B --> C[Get City Input]
+    C --> D[Fetch Weather API]
+    D --> E[Process JSON Data]
+    E --> F[Show Temperature, Humidity, Forecast]
+    F --> G[Update UI]
 ```
