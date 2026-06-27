@@ -1,8 +1,8 @@
-stdin city name -> App -> WeatherService -> MockWeatherService -> WeatherReport
-App -> XmlFormatter -> XML stdout
-MockWeatherService -> WeatherException -> Log4j error log
-pom.xml -> build/test/quality
-Jenkinsfile -> build/test/quality
-AppMockitoTest -> WeatherService / WeatherReport
-MockWeatherServiceTest -> MockWeatherService
-XmlFormatterTest -> XmlFormatter
+```mermaid
+flowchart TD
+    A[User Opens App] --> B[Enter City Name]
+    B --> C[API Request Sent]
+    C --> D[Weather API Response]
+    D --> E[Display Weather Data]
+    E --> F[Show UI to User]
+```
