@@ -1,48 +1,48 @@
 flowchart TD
-    CON["stdin: city name"]
+    CON["stdin city name"]
 
-    subgraph RUNTIME["Runtime / src/main/java"]
-        APP["App\nmain() / runApplication()"]
-        WS["WeatherService\ninterface"]
-        MWS["MockWeatherService\nvalidates blank input\nnormalises city\nreturns fixed weather data"]
-        WR["WeatherReport\ncity, temperature, description, humidity, wind speed"]
-        XF["XmlFormatter\ntoXml(report)"]
-        WE["WeatherException\nmessage / message + cause"]
+    subgraph RUNTIME["Runtime"]
+        APP["App"]
+        WS["WeatherService"]
+        MWS["MockWeatherService"]
+        WR["WeatherReport"]
+        XF["XmlFormatter"]
+        WE["WeatherException"]
     end
 
     subgraph OUTPUT["Output"]
-        XML["stdout XML"]
+        XML["XML stdout"]
         ERR["Log4j error log"]
     end
 
-    subgraph TESTS["Tests / src/test/java"]
-        AMT["AppMockitoTest\nMockito mock of WeatherService"]
-        MWST["MockWeatherServiceTest\ncity, blank input, exception"]
-        XFT["XmlFormatterTest\nXML tags and null guard"]
+    subgraph TESTS["Tests"]
+        AMT["AppMockitoTest"]
+        MWST["MockWeatherServiceTest"]
+        XFT["XmlFormatterTest"]
     end
 
-    subgraph BUILD["Build / CI"]
-        POM["pom.xml\nJUnit, Mockito, Log4j\nCheckstyle, PMD, SpotBugs, JaCoCo"]
-        JF["Jenkinsfile\nBuild / Test / Quality"]
+    subgraph BUILD["Build CI"]
+        POM["pom.xml"]
+        JF["Jenkinsfile"]
     end
 
     CON --> APP
-    APP -->|getWeatherForCity| WS
-    WS -.-> MWS
-    MWS -->|creates| WR
-    MWS -.->|throws on blank input| WE
-    APP -->|toXml| XF
-    XF -->|reads all fields| WR
+    APP --> WS
+    WS --> MWS
+    MWS --> WR
+    MWS --> WE
+    APP --> XF
+    XF --> WR
     XF --> XML
-    APP -.->|catches and logs| WE
-    WE -.-> ERR
+    APP --> WE
+    WE --> ERR
 
-    AMT -.-> WS
-    AMT -.-> WR
-    MWST -.-> MWS
-    XFT -.-> XF
-    XFT -.-> WR
+    AMT --> WS
+    AMT --> WR
+    MWST --> MWS
+    XFT --> XF
+    XFT --> WR
 
     JF --> POM
-    POM -.-> RUNTIME
-    POM -.-> TESTS
+    POM --> RUNTIME
+    POM --> TESTS
