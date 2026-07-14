@@ -14,7 +14,7 @@ class AppMockitoTest {
     @Test
     void shouldUseMockitoToMockService() throws WeatherException {
         WeatherService weatherService = Mockito.mock(WeatherService.class);
-        WeatherReport report = new WeatherReport("Munich", 18.5, "Rainy", 70);
+        WeatherReport report = new WeatherReport("Munich", 18.5, "Rainy", 70, 20);
 
         when(weatherService.getWeatherForCity("Munich")).thenReturn(report);
 

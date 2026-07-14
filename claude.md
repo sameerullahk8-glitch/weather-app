@@ -1,13 +1,27 @@
 # CLAUDE.md
 
 ## Project
-This repository contains the weather-app project for Professional Java Development.
+This repository contains the weather-app project for Professional Java Development at FH Albsig.
 
 Goals:
 - Keep the project buildable with Maven.
 - Keep quality tools green or improving.
 - Keep commits small, meaningful, and reviewable.
 - Use Claude Code as a co-pilot, not as an unchecked code generator.
+
+## Domain model
+These are the key classes. Read them before suggesting changes.
+
+| Class | Role |
+|-------|------|
+| `App` | Entry point; reads city from stdin, calls service, prints XML |
+| `WeatherReport` | Immutable value object: city, temperature (°C), description, humidity (%), windSpeedKmh (km/h) |
+| `WeatherService` | Interface with one method: `getWeatherForCity(String city)` |
+| `MockWeatherService` | Only implementation; returns distinct profiles for Berlin, Hamburg, München/Munich, Stuttgart; unknown cities fall back to 21.5 °C / Sunny / 55 % / 15 km/h; validates blank city |
+| `XmlFormatter` | Builds XML string from a WeatherReport; null-safe |
+| `WeatherException` | Checked exception with message-only and message+cause constructors |
+
+Note: `WeatherReport.getCondition()` and `getDescription()` return the same field intentionally — both names appear in the test suite and XML formatter.
 
 ## Beginner-safe mode
 Follow these rules unless explicitly told otherwise:
@@ -21,7 +35,8 @@ Follow these rules unless explicitly told otherwise:
 ## Files to treat carefully
 Do not change these unless explicitly requested:
 - README.md
-- claude.md
+- CLAUDE.md
+- CHANGELOG.md
 - pom.xml
 - Java source files unrelated to the current task
 
@@ -96,6 +111,32 @@ Always answer in a way the student can present in class:
 - mvn spotbugs:check
 - git status
 - git log --oneline
+
+## Cognitive core
+
+Three small tools that keep the project presentation-ready.
+They live in `.claude/` and do not affect the Java source or Maven build.
+
+### Hook — `.claude/hooks/check_staged_target.ps1`
+Blocks any `git commit` if `target/` build artifacts are staged.
+Wired in `.claude/settings.json` as a `PreToolUse` hook on the Bash tool.
+Demo: `git add target/` then attempt a commit — the hook fires and prints the fix.
+
+### Skill — `/presentation-check`
+Custom slash command defined in `.claude/commands/presentation-check.md`.
+Reads `MockWeatherService.java`, `MockWeatherServiceTest.java`, and `README.md`,
+then produces a feature-status report and a three-sentence professor pitch.
+Run it by typing `/presentation-check` in the Claude Code prompt.
+
+### Fitness check — `.claude/scripts/fitness-check.ps1`
+PowerShell script that scores the project 0–5 on five presentation criteria:
+1. Tests pass (`mvn test`)
+2. Quality tools pass (Checkstyle, PMD, SpotBugs)
+3. README example matches current city profiles
+4. Per-city `PROFILES` map and fallback are present in `MockWeatherService`
+5. No `target/` artifacts staged in git
+Run from the project root: `powershell -File .claude/scripts/fitness-check.ps1`
+Or from the Claude Code prompt: `! powershell -File .claude/scripts/fitness-check.ps1`
 
 ## What Claude must not do
 - Do not invent requirements.

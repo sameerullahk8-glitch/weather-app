@@ -12,16 +12,23 @@ class XmlFormatterTest {
 
     @Test
     void shouldContainCityTag() {
-        WeatherReport report = new WeatherReport("Berlin", 20.0, "Cloudy", 60);
+        WeatherReport report = new WeatherReport("Berlin", 20.0, "Cloudy", 60, 12);
         String xml = formatter.toXml(report);
         assertTrue(xml.contains("<city>Berlin</city>"));
     }
 
     @Test
     void shouldContainTemperatureTag() {
-        WeatherReport report = new WeatherReport("Berlin", 20.0, "Cloudy", 60);
+        WeatherReport report = new WeatherReport("Berlin", 20.0, "Cloudy", 60, 12);
         String xml = formatter.toXml(report);
         assertTrue(xml.contains("<temperatureCelsius>20.0</temperatureCelsius>"));
+    }
+
+    @Test
+    void shouldContainWindSpeedTag() {
+        WeatherReport report = new WeatherReport("Berlin", 20.0, "Cloudy", 60, 12);
+        String xml = formatter.toXml(report);
+        assertTrue(xml.contains("<windSpeedKmh>12</windSpeedKmh>"));
     }
 
     @Test

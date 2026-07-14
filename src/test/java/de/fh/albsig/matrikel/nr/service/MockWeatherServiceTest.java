@@ -37,14 +37,39 @@ class MockWeatherServiceTest {
 
     @Test
     void shouldReturnSunnyCondition() throws WeatherException {
-        WeatherReport report = service.getWeatherForCity("hamburg");
+        WeatherReport report = service.getWeatherForCity("münchen");
         assertEquals("Sunny", report.getCondition());
     }
 
     @Test
     void shouldReturnDescription() throws WeatherException {
         WeatherReport report = service.getWeatherForCity("berlin");
-        assertEquals("Sunny", report.getDescription());
+        assertEquals("Overcast", report.getDescription());
+    }
+
+    @Test
+    void shouldReturnWindSpeed() throws WeatherException {
+        WeatherReport report = service.getWeatherForCity("berlin");
+        assertEquals(25, report.getWindSpeedKmh());
+    }
+
+    @Test
+    void shouldReturnHamburgRainy() throws WeatherException {
+        WeatherReport report = service.getWeatherForCity("hamburg");
+        assertEquals("Rainy", report.getCondition());
+    }
+
+    @Test
+    void shouldReturnFallbackForUnknownCity() throws WeatherException {
+        WeatherReport report = service.getWeatherForCity("Paris");
+        assertEquals("Paris", report.getCity());
+        assertEquals(21.5, report.getTemperature());
+    }
+
+    @Test
+    void shouldReturnMunichAlias() throws WeatherException {
+        WeatherReport report = service.getWeatherForCity("munich");
+        assertEquals("Sunny", report.getCondition());
     }
 
     @Test

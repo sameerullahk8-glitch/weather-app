@@ -27,6 +27,7 @@ public class XmlFormatter {
         .append("</temperatureCelsius>");
     xml.append("<condition>").append(report.getCondition()).append("</condition>");
     xml.append("<humidity>").append(report.getHumidity()).append("</humidity>");
+    xml.append("<windSpeedKmh>").append(report.getWindSpeedKmh()).append("</windSpeedKmh>");
     xml.append("</weather>");
     return xml.toString();
   }
